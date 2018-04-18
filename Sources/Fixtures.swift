@@ -3,6 +3,14 @@ import DataModelsKit
 import Meow
 
 struct Fixtures {
+    private func getApp() throws -> ObjectId? {
+        guard let app = try App.findOne() else {
+            return nil
+        }
+        
+        return app._id
+    }
+
     private func registerApps() throws -> ObjectId? {
         print("##################################")
         print("[X] Registering apps")
@@ -27,6 +35,14 @@ struct Fixtures {
         return app._id
     }
     
+    private func existingTags() throws -> Bool {
+        guard try Tag.count() > 0 else {
+            return false
+        }
+        
+        return true
+    }
+
     private func registerTags(to app: ObjectId) throws {
         typealias TypeTuple = (name: String, type: ActionType)
         let tags: [TypeTuple] = [
@@ -79,12 +95,27 @@ struct Fixtures {
 
     func start() throws {
         print("Starting to load fixtures to database")
-        
-        if let app = try registerApps() {
-            try registerTags(to: app)
-            try createNotifications(to: app)
+
+        var value: ObjectId?
+        if let objectID = try getApp() {
+            print("We found one app existing...")
+            value = objectID
+        }
+        else if let objectID = try registerApps() {
+            print("Any app was found... Creating a new one!")
+            value = objectID
         }
         
+        guard let app = value else {
+            return
+        }
+        
+        if try existingTags() {
+            try registerTags(to: app)
+        }
+
+        try createNotifications(to: app)
+
         print("Finished load fixtures")
     }
 }
