@@ -36,7 +36,8 @@ struct Fixtures {
     }
     
     private func existingTags() throws -> Bool {
-        guard try Tag.count() > 0 else {
+        let count = try Tag.count()
+        guard count > 0 else {
             return false
         }
         
@@ -110,7 +111,7 @@ struct Fixtures {
             return
         }
         
-        if try existingTags() {
+        if try !existingTags() {
             try registerTags(to: app)
         }
 
