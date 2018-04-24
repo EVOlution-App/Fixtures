@@ -17,7 +17,7 @@ let package = Package(
     targets: [
         .target(
             name: "Fixtures",
-            dependencies: ["DataModels"],
+            dependencies: ["DataModelsKit"],
             path: "Sources"
         )
     ]
