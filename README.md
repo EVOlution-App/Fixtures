@@ -6,6 +6,7 @@ This project contains a basic amount of data used by Evolution.
 - Swift 4.0.3
 - Xcode 9+
 - Meow
+- MongoDB
 
 ## Credits
 
