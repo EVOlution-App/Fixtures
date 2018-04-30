@@ -73,26 +73,6 @@ struct Fixtures {
             }
         }
     }
-    
-    private func createNotifications(to app: ObjectId) throws {
-        print("##################################")
-        print("[X] Creating notifications")
-        let notification = Notification()
-        notification.title = "[SE-0210] New statement"
-        notification.category = ActionType.proposalCreated
-        notification.app = try Reference(to: app)
-        
-        do {
-            try notification.save()
-            
-            if let title = notification.title, let category = notification.category {
-                print("[Saved] Notification: \(title) - Category: \(category)")
-            }
-        }
-        catch {
-            print("[Error][Not Saved] Notification: \(notification.title ?? "---")")
-        }
-    }
 
     func start() throws {
         print("Starting to load fixtures to database")
@@ -114,8 +94,6 @@ struct Fixtures {
         if try !existingTags() {
             try registerTags(to: app)
         }
-
-        try createNotifications(to: app)
 
         print("Finished load fixtures")
     }
