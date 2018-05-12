@@ -48,7 +48,7 @@ struct Fixtures {
         typealias TypeTuple = (name: String, type: ActionType)
         let tags: [TypeTuple] = [
             (name: "Proposal creation", type: .proposalCreated),
-            (name: "Proposal dhanged", type: .statusChanged)
+            (name: "Proposal changed", type: .statusChanged)
         ]
         
         print("##################################")
